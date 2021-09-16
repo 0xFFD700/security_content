@@ -18,12 +18,9 @@ jobs:
           command: |
             git checkout master
       - run:
-          name: "Install Virtual Environment"
+          name: "Validate"
           command: |
             pip install virtualenv && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt
-      - run:
-          name: "Validate Security Content"
-          command: |
             python bin/validate.py --path . --verbose
       - run:
           name: "Build Security Content"
