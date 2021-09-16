@@ -25,6 +25,7 @@ jobs:
       - run:
           name: "Build Security Content"
           command: |
+            pip install virtualenv && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt
             python bin/generate.py --path . --output package --verbose      
             
 # Invoke jobs via workflows
