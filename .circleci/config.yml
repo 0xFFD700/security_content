@@ -4,7 +4,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  validate:
+  build_security_content:
     # Specify the execution environment.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -14,15 +14,25 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "checkout"
+          name: "Change branch"
           command: |
             git checkout master
+      - run:
+          name: "Install Virtual Environment"
+          command: |
             pip install virtualenv && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt
+      - run:
+          name: "Validate Security Content"
+          command: |
             python bin/validate.py --path . --verbose
+      - run:
+          name: "Build Security Content"
+          command: |
+            python bin/generate.py --path . --output package --verbose      
             
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   splunk-workflow:
     jobs:
-      - validate
+      - build_security_content
