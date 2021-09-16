@@ -43,7 +43,7 @@ jobs:
       - run:
           name: "Splunk CI"
           command: |
-            ssh root@testumgebung.0xffd700.ccom 'bash -s' < python bin/updateApp.py
+            ssh root@testumgebung.0xffd700.ccom 'bash -s' < slim update-installation --action update --package mysplunkdetections.spl
   test-detections:
     docker:
       - image: cimg/python:3.9.7
