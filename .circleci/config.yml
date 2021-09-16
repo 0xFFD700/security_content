@@ -18,6 +18,11 @@ jobs:
           command: |
             git checkout master
       - run:
+          name: "Generate Tests"
+          command: |
+            pip install virtualenv && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt
+            python bin/ci-generate.py
+      - run:
           name: "Validate"
           command: |
             pip install virtualenv && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt
